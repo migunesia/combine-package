@@ -4,15 +4,7 @@ Combine your npm package, yarn package or similiar into one place, so your stora
 
 ## Features 
 
-## Methods
-
-### init
-
-### add_list
-
-### remove_list
-
-### keep_package
+## How to use
 
 ## Contributions
 
