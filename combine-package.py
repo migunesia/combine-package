@@ -22,12 +22,18 @@ class CombinePackage:
             if type in self.support_type:
                 self.type = type
             else:
-                self.show_error("<not_yet>", "Type package manager not supported yet")
+                self.show_error(
+                    "<not_yet>",
+                    "Type package manager not supported yet"
+                )
                 return
 
         # valid required param
         if file_list == "" and len(files) == 0:
-            self.show_error("<not_yet>", "You must fill param file_list or files")
+            self.show_error(
+                "<not_yet>",
+                "You must fill param file_list or files"
+            )
             return
 
         # valid & fill param file_list
@@ -37,7 +43,10 @@ class CombinePackage:
                 self.file_list = file_list
                 self.path_file_list = os.path.dirname(os.path.realpath(self.file_list))
             else:
-                self.show_error("<not_yet>", "The file list is not exists")
+                self.show_error(
+                    "<not_yet>",
+                    "The file list is not exists"
+                )
                 return
 
         # valid & fill param files
@@ -48,14 +57,20 @@ class CombinePackage:
             if all_exists:
                 self.files = files
             else:
-                self.show_error("<not_yet>", "")
+                self.show_error(
+                    "<not_yet>",
+                    ""
+                )
                 return
 
             # valid & fill param combine to
             if os.path.exists(combine_to):
                 self.combine_to = combine_to
             else:
-                self.show_error("<not_yet>", "")
+                self.show_error(
+                    "<not_yet>",
+                    ""
+                )
                 return
 
         # combine package
@@ -71,7 +86,10 @@ class CombinePackage:
             self._npm_by_param()
 
     def _npm_by_file_list(self):
-        print("Starting combine package by list defined ({}) ....".format(self.file_list))
+        print(
+            "Starting combine package by list defined ({}) ...."
+            .format(self.file_list)
+        )
 
         # create list of all dependencies
         dependencies = []
@@ -80,7 +98,7 @@ class CombinePackage:
             file_package_json = open(line.strip(), "r")
             package_json = json.loads(file_package_json.read())
             dependencies.append(package_json["dependencies"])
-        
+
         # combine
         dep_combine = {}
         for dd in dependencies:
@@ -89,16 +107,15 @@ class CombinePackage:
                     # if package not exists then append
                     dep_combine["{}".format(dname)] = "{}".format(dver)
                 # else:
-                    # check version 
+                    # check version
                     # comingsoon: get the last version of the package is coming soon
 
         # npm init
 
-
         # path file package.json for combine
         if("\\" in self.path_file_list):
             cdn_package_json = self.path_file_list + "\\package.json"
-        else: 
+        else:
             cdn_package_json = self.path_file_list + "/package.json"
 
         # read file & replace dependencies
@@ -111,7 +128,6 @@ class CombinePackage:
         w_cdn_package_json = open(cdn_package_json, "w")
         w_cdn_package_json.write(json.dumps(c_cdn_package_json, indent=4))
         w_cdn_package_json.close()
-
 
     def _npm_by_param(self):
         print("Starting combine package by files param ....")
